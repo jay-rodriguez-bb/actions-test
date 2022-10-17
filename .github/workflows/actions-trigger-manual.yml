@@ -11,7 +11,7 @@ on:
     types: [closed, assigned, opened, reopened]
 
 jobs: 
-  run-github-actions: 
+  run-github-actions-dispatch: 
     runs-on: ubuntu-latest
     steps:
       - name: playload
@@ -27,7 +27,7 @@ jobs:
           # git clone git@github:$GITHUB_REPOSITORY
           # git checkout $GITHUB_SHA
       - name: Checkout 
-        uses: actions/checkout@v2.5.0cs
+        uses: actions/checkout@v2.5.0
       - name: List Files After Checkout
         run: |
           pwd
