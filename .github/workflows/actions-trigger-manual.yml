@@ -1,17 +1,21 @@
+
+
 name: Actions Workflow 
 
-on: 
-  push:
+on:
+  repository_dispatch:
+    types: [build]
+  # https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event
+  # push:
   pull_request:
     types: [closed, assigned, opened, reopened]
-  schedule:
-    - cron: "0/5 * * * *"
-    - cron: "0/6 * * * *" 
-    
+
 jobs: 
   run-github-actions: 
     runs-on: ubuntu-latest
     steps:
+      - name: playload
+        run: echo ${{ github.event.client_payload.env }}
       - name: List Files 
         run: |
           pwd
@@ -23,7 +27,7 @@ jobs:
           # git clone git@github:$GITHUB_REPOSITORY
           # git checkout $GITHUB_SHA
       - name: Checkout 
-        uses: actions/checkout@v2.5.0
+        uses: actions/checkout@v2.5.0cs
       - name: List Files After Checkout
         run: |
           pwd
