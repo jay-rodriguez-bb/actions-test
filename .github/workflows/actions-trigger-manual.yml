@@ -1,6 +1,6 @@
 
 
-name: Actions Workflow 
+name: Actions Workflow Dispatch
 
 on:
   repository_dispatch:
