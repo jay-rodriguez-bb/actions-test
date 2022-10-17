@@ -15,7 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: playload
-        run: echo ${{ github.event.client_payload.env }}
+        run: |
+          echo ${{ github.event.client_payload.env }}
+          echo ${{ github.event.client_payload.integration }}
       - name: List Files 
         run: |
           pwd
