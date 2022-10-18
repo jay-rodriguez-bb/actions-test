@@ -1,11 +1,20 @@
-name: Actions Workflow 
-
-on: [push]
+name: trigger dispatch api
+on:
+  repository_dispatch:
+    types: [build]
+  # https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event
+  # push:
+  pull_request:
+    types: [closed, assigned, opened, reopened]
 
 jobs: 
-  run-github-actions: 
+  run-github-actions-dispatch: 
     runs-on: ubuntu-latest
-    steps: 
+    steps:
+      - name: playload
+        run: |
+          echo ${{ github.event.client_payload.env }}
+          echo ${{ github.event.client_payload.integration }}
       - name: List Files 
         run: |
           pwd
@@ -24,8 +33,8 @@ jobs:
           ls -a
       - name: Simple JS Action
         id: greet 
-        uses: actions/hello-world-javascript-action@v1.1
+        uses: actions/hello-world-javascript-action@v1
         with: 
-          who-to-greet: Jay
+          who-to-greet: John
       - name: Log Greeting Time
         run: echo "${{ steps.greet.outputs.time }}"

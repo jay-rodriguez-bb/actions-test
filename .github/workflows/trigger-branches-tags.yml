@@ -1,17 +1,31 @@
-name: Actions Workflow 
-
-on: 
+name: trigger off branches and tags
+on:
+  repository_dispatch:
+    types: [build]
+  # https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event
   push:
+    branches:
+      - main
+      - "feature/**" # matches featur/featA, feature/featB, doesn't match feature/feat/a
+      - "!feature/featc"
+    tags: 
+      - v1.*
+    paths: 
+      - "**.js"
+      - "!filename.js"
+    # paths-ignore:
+    # - 'docs/**'
   pull_request:
     types: [closed, assigned, opened, reopened]
-  schedule:
-    - cron: "0/5 * * * *"
-    - cron: "0/6 * * * *" 
-    
+
 jobs: 
   run-github-actions: 
     runs-on: ubuntu-latest
     steps:
+      - name: playload
+        run: |
+          echo ${{ github.event.client_payload.env }}
+          echo ${{ github.event.client_payload.integration }}
       - name: List Files 
         run: |
           pwd

@@ -1,4 +1,4 @@
-name: context and functions
+name: contexts functions conditionals
 on: [push, pull_request]
 
 jobs:
