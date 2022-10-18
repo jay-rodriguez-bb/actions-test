@@ -9,7 +9,7 @@ jobs:
         node_version: [6,8,10]
         exclude:
           - os: macos-latest
-            node_version: [6,8]
+            node_version: [or,[6,8]]
     runs-on: ${{ matrix.os }}
     # https://github.com/actions/setup-node
     steps: 
