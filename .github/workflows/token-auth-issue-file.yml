@@ -1,7 +1,5 @@
 name: token auth for issues and repo push
 on: push 
-env: 
-  WF_ENV: Available to all jobs 
 
 jobs: 
   create_issue:
@@ -16,8 +14,8 @@ jobs:
           git config --global user.email "my-bot@bot.com"
           git config --global user.name "my-bot"
           git fetch
-          git checkout master
-          git branch --set-upstream-to=origin/master
+          git checkout main
+          git branch --set-upstream-to=origin/main
           git pull
           ls -a
           echo $RANDOM >> random.txt
