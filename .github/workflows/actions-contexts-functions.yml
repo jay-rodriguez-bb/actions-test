@@ -1,5 +1,5 @@
 name: context and functions
-on: push
+on: [push, pull_request]
 
 jobs:
   functions: 
@@ -9,16 +9,18 @@ jobs:
         run: |
           echo ${{ contains( 'hello', '11' ) }}
           echo ${{ startsWith( 'hello', 'he' ) }}
-          echo ${{ endsWith( 'hello', '1o' ) }}
+          echo ${{ endsWith( 'hello', 'lo' ) }}
           echo ${{ format( 'Hello {0} {1} {2}', 'World', '!', '!' ) }}
   one:
     runs-on: ubuntu-20.04
+    if: github.event_name == 'push'        # run job condition only on push
     steps:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: eccho "$GITHUB_CONTEXT"       # intentioal failure in command
       - name: Dump job context
+        if: failure()                      # run step condition to run even if previous job failed, can include falure/success/ect
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
         run: echo "$JOB_CONTEXT"
@@ -27,6 +29,7 @@ jobs:
           STEPS_CONTEXT: ${{ toJson(steps) }}
         run: echo "$STEPS_CONTEXT"
       - name: Dump runner context
+        if: always()                       # run step condition always
         env:
           RUNNER_CONTEXT: ${{ toJson(runner) }}
         run: echo "$RUNNER_CONTEXT"
