@@ -7,12 +7,15 @@ jobs:
       matrix:
         os: [macos-latest,ubuntu-latest]
         node_version: [6,8,10]
+        exclude:
+          - os: macos-latest
+            node-version: [6,8]
     runs-on: ${{ matrix.os }}
     # https://github.com/actions/setup-node
     steps: 
       - name: Log node version 
         run: node -v
-      - uses: actions/setup-node@V3.5.0
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
       - name: Log node version 
